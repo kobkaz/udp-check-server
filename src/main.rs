@@ -15,7 +15,8 @@ async fn main() -> Result<()> {
     loop {
         let (len, addr) = sock.recv_from(&mut buf).await?;
         let buf = &buf[..len];
-        println!("Received {} bytes from {}", buf.len(), addr);
+        let time = chrono::Utc::now();
+        println!("{}: Received {} bytes from {}", time, buf.len(), addr);
         sock.send_to(format!("Received {} bytes\n", buf.len()).as_bytes(), addr)
             .await?;
     }
